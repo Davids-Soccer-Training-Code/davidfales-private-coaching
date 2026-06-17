@@ -7,6 +7,7 @@ import {
 } from "@/app/types/blog";
 import { Photo, PhotoListItem } from "@/app/types/gallery";
 import { GroupSessionWithAvailability } from "@/app/types/groupSessions";
+import { Story, StoryListItem } from "@/app/types/story";
 import crypto from "crypto";
 
 // ========== BLOG POSTS ==========
@@ -515,4 +516,201 @@ export async function getGroupSessionById(
   );
 
   return result.rows[0] || null;
+}
+
+// ========== STORIES ==========
+
+export async function getPublishedStories(
+  limit = 50,
+  offset = 0
+): Promise<StoryListItem[]> {
+  const result = await pool.query(
+    `SELECT
+      id, title, slug, excerpt, player_name, featured_image_url,
+      published_at, author_name, view_count, featured
+     FROM stories
+     WHERE published = true
+     ORDER BY featured DESC, display_order ASC, published_at DESC
+     LIMIT $1 OFFSET $2`,
+    [limit, offset]
+  );
+  return result.rows;
+}
+
+export async function getStoryBySlug(
+  slug: string,
+  options?: { incrementView?: boolean }
+): Promise<Story | null> {
+  const result = await pool.query(
+    `SELECT * FROM stories WHERE slug = $1 AND published = true`,
+    [slug]
+  );
+
+  if (result.rows[0]) {
+    const shouldIncrement = options?.incrementView !== false;
+    if (shouldIncrement) {
+      await pool.query(
+        "UPDATE stories SET view_count = view_count + 1 WHERE id = $1",
+        [result.rows[0].id]
+      );
+    }
+  }
+
+  return result.rows[0] || null;
+}
+
+export async function getStoryById(id: string): Promise<Story | null> {
+  const result = await pool.query("SELECT * FROM stories WHERE id = $1", [id]);
+  return result.rows[0] || null;
+}
+
+export async function getAllStoriesForAdmin(
+  limit = 100,
+  offset = 0
+): Promise<Story[]> {
+  const result = await pool.query(
+    `SELECT * FROM stories
+     ORDER BY created_at DESC
+     LIMIT $1 OFFSET $2`,
+    [limit, offset]
+  );
+  return result.rows;
+}
+
+export async function createStory(story: Partial<Story>): Promise<Story> {
+  const id = crypto.randomUUID();
+  const {
+    title,
+    slug,
+    excerpt,
+    player_name,
+    content,
+    content_html,
+    featured_image_url,
+    author_name = "David Fales",
+    published = false,
+    featured = false,
+    display_order = 0,
+    published_at,
+    meta_title,
+    meta_description,
+  } = story;
+
+  const result = await pool.query(
+    `INSERT INTO stories (
+      id, title, slug, excerpt, player_name, content, content_html,
+      featured_image_url, author_name, published, featured, display_order,
+      published_at, meta_title, meta_description
+    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+    RETURNING *`,
+    [
+      id,
+      title,
+      slug,
+      excerpt,
+      player_name,
+      content,
+      content_html,
+      featured_image_url,
+      author_name,
+      published,
+      featured,
+      display_order,
+      published ? published_at || new Date() : null,
+      meta_title,
+      meta_description,
+    ]
+  );
+
+  return result.rows[0];
+}
+
+export async function updateStory(
+  id: string,
+  updates: Partial<Story>
+): Promise<Story> {
+  const {
+    title,
+    slug,
+    excerpt,
+    player_name,
+    content,
+    content_html,
+    featured_image_url,
+    author_name,
+    published,
+    featured,
+    display_order,
+    meta_title,
+    meta_description,
+  } = updates;
+
+  // If publishing for the first time, set published_at
+  let published_at = updates.published_at;
+  if (published && !published_at) {
+    const existing = await getStoryById(id);
+    if (existing && !existing.published_at) {
+      published_at = new Date();
+    }
+  }
+
+  const result = await pool.query(
+    `UPDATE stories SET
+      title = COALESCE($2, title),
+      slug = COALESCE($3, slug),
+      excerpt = COALESCE($4, excerpt),
+      player_name = COALESCE($5, player_name),
+      content = COALESCE($6, content),
+      content_html = COALESCE($7, content_html),
+      featured_image_url = COALESCE($8, featured_image_url),
+      author_name = COALESCE($9, author_name),
+      published = COALESCE($10, published),
+      featured = COALESCE($11, featured),
+      display_order = COALESCE($12, display_order),
+      published_at = CASE
+        WHEN $10 = false THEN NULL
+        ELSE COALESCE($13, published_at)
+      END,
+      meta_title = COALESCE($14, meta_title),
+      meta_description = COALESCE($15, meta_description),
+      updated_at = CURRENT_TIMESTAMP
+     WHERE id = $1
+     RETURNING *`,
+    [
+      id,
+      title,
+      slug,
+      excerpt,
+      player_name,
+      content,
+      content_html,
+      featured_image_url,
+      author_name,
+      published,
+      featured,
+      display_order,
+      published_at,
+      meta_title,
+      meta_description,
+    ]
+  );
+
+  return result.rows[0];
+}
+
+export async function deleteStory(id: string): Promise<void> {
+  await pool.query("DELETE FROM stories WHERE id = $1", [id]);
+}
+
+export async function checkStorySlugExists(
+  slug: string,
+  excludeId?: string
+): Promise<boolean> {
+  const result = await pool.query(
+    excludeId
+      ? "SELECT id FROM stories WHERE slug = $1 AND id != $2"
+      : "SELECT id FROM stories WHERE slug = $1",
+    excludeId ? [slug, excludeId] : [slug]
+  );
+  return result.rows.length > 0;
 }

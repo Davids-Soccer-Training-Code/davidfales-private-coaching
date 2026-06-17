@@ -1,18 +1,18 @@
 "use client";
 
 import { useState } from "react";
-
-const PLAYER_DASHBOARD_URL =
-  process.env.NEXT_PUBLIC_PLAYER_DASHBOARD_URL ||
-  "https://app.davidssoccertraining.com";
+import {
+  PLAYER_DASHBOARD_URL,
+  BOOKING_URL,
+  buildSmsHref,
+} from "@/app/lib/contact";
 
 export default function MainHeaderMinimal() {
-  const COACH_PHONE_E164 = "+17206122979";
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const smsHref = `sms:${COACH_PHONE_E164}?body=${encodeURIComponent(
+  const smsHref = buildSmsHref(
     "Hi David, I'm interested in private soccer training in Mesa/Gilbert."
-  )}`;
+  );
 
   return (
     <header className="bg-linear-to-r from-emerald-600 to-emerald-700 text-white shadow-lg sticky top-0 z-50">
@@ -75,22 +75,32 @@ export default function MainHeaderMinimal() {
               </a>
             </nav>
 
-            {/* CTA: Text Coach David */}
+            {/* CTAs: Book + Text */}
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center bg-white text-emerald-700 px-4 py-2 rounded-full font-semibold text-sm hover:bg-emerald-50 transition-colors shadow"
+            >
+              Book a session
+            </a>
             <a
               href={smsHref}
-              className="inline-flex items-center justify-center bg-white text-emerald-700 px-4 py-2 rounded-full font-semibold text-sm border-2 border-white hover:bg-emerald-50 transition-colors"
+              className="inline-flex items-center justify-center bg-transparent text-white px-4 py-2 rounded-full font-semibold text-sm border-2 border-white/80 hover:bg-white/10 transition-colors"
             >
               Text Coach David
             </a>
           </div>
 
           {/* Mobile/Tablet: CTA + Hamburger */}
-          <div className="flex lg:hidden items-center gap-3">
+          <div className="flex lg:hidden items-center gap-2">
             <a
-              href={smsHref}
-              className="inline-flex items-center justify-center bg-white text-emerald-700 px-3 py-1.5 rounded-full font-semibold text-xs border-2 border-white hover:bg-emerald-50 transition-colors"
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center bg-white text-emerald-700 px-3 py-1.5 rounded-full font-semibold text-xs hover:bg-emerald-50 transition-colors"
             >
-              Text Coach David
+              Book
             </a>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -178,6 +188,16 @@ export default function MainHeaderMinimal() {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Player Dashboard
+              </a>
+
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2 text-center bg-white text-emerald-700 py-3 rounded-full font-semibold shadow"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Book a session
               </a>
             </nav>
           </div>
