@@ -37,7 +37,7 @@ export default function FeaturedPhotos() {
           View Gallery →
         </Link>
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         {featuredPhotos.map((photo) => (
           <Link
             key={photo.id}

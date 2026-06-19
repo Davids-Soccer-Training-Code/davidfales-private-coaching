@@ -8,10 +8,10 @@ export async function GET(request: NextRequest) {
     // Get all published photos
     const allPhotos = await getPublishedPhotos(100, 0);
 
-    // Filter for featured photos and limit to 3
+    // Filter for featured photos and limit to 9 (3x3 block on the homepage)
     const featuredPhotos = allPhotos
       .filter((photo) => photo.featured)
-      .slice(0, 3);
+      .slice(0, 9);
 
     return NextResponse.json({ photos: featuredPhotos });
   } catch (error) {
