@@ -1,6 +1,7 @@
 "use client";
 
 import { useEditor, EditorContent } from "@tiptap/react";
+import { upload } from "@vercel/blob/client";
 import { extensions } from "@/app/lib/tiptap/extensions";
 
 interface RichTextEditorProps {
@@ -40,24 +41,16 @@ export default function RichTextEditor({
       if (!file) return;
 
       try {
-        const formData = new FormData();
-        formData.append("file", file);
-
-        const res = await fetch("/api/blog/upload", {
-          method: "POST",
-          body: formData,
+        const blob = await upload(file.name, file, {
+          access: "public",
+          handleUploadUrl: "/api/blog/upload",
         });
-
-        if (res.ok) {
-          const { url } = await res.json();
-          editor.chain().focus().setImage({ src: url }).run();
-        } else {
-          const data = await res.json().catch(() => ({}));
-          alert(data.error || "Failed to upload image");
-        }
+        editor.chain().focus().setImage({ src: blob.url }).run();
       } catch (error) {
         console.error("Upload error:", error);
-        alert("Failed to upload image");
+        alert(
+          error instanceof Error ? error.message : "Failed to upload image"
+        );
       }
     };
     input.click();

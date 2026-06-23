@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { upload } from "@vercel/blob/client";
 import RichTextEditor from "./RichTextEditor";
 import { slugify } from "@/app/lib/utils/slugify";
 import { Story } from "@/app/types/story";
@@ -97,24 +98,14 @@ export default function StoryForm({
     if (!file) return;
 
     try {
-      const uploadData = new FormData();
-      uploadData.append("file", file);
-
-      const res = await fetch("/api/blog/upload", {
-        method: "POST",
-        body: uploadData,
+      const blob = await upload(file.name, file, {
+        access: "public",
+        handleUploadUrl: "/api/blog/upload",
       });
-
-      if (res.ok) {
-        const { url } = await res.json();
-        setFormData((prev) => ({ ...prev, featured_image_url: url }));
-      } else {
-        const data = await res.json().catch(() => ({}));
-        alert(data.error || "Failed to upload image");
-      }
+      setFormData((prev) => ({ ...prev, featured_image_url: blob.url }));
     } catch (error) {
       console.error("Upload error:", error);
-      alert("Failed to upload image");
+      alert(error instanceof Error ? error.message : "Failed to upload image");
     }
   };
 

@@ -2,6 +2,7 @@
 
 import { useState, useRef, FormEvent, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
+import { upload } from "@vercel/blob/client";
 import { Photo } from "@/app/types/gallery";
 import { slugify } from "@/app/lib/utils/slugify";
 
@@ -86,21 +87,12 @@ export default function PhotoForm({ photo, isEdit = false }: PhotoFormProps) {
     setError("");
 
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const res = await fetch("/api/gallery/upload", {
-        method: "POST",
-        body: formData,
+      const blob = await upload(`gallery/${file.name}`, file, {
+        access: "public",
+        handleUploadUrl: "/api/gallery/upload",
       });
 
-      if (!res.ok) {
-        const error = await res.json();
-        throw new Error(error.error || "Upload failed");
-      }
-
-      const data = await res.json();
-      setImageUrl(data.url);
+      setImageUrl(blob.url);
       setFileSize(file.size);
 
       // Get image dimensions
@@ -109,7 +101,7 @@ export default function PhotoForm({ photo, isEdit = false }: PhotoFormProps) {
         setWidth(img.width);
         setHeight(img.height);
       };
-      img.src = data.url;
+      img.src = blob.url;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to upload image");
     } finally {
