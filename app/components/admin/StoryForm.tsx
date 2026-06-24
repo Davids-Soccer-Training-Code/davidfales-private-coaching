@@ -37,6 +37,8 @@ export default function StoryForm({
     initialData?.content_html || ""
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [showSeo, setShowSeo] = useState(false);
 
   const handleContentChange = (json: any, html: string) => {
@@ -97,15 +99,20 @@ export default function StoryForm({
     const file = e.target.files?.[0];
     if (!file) return;
 
+    setIsUploading(true);
+    setUploadProgress(0);
     try {
       const blob = await upload(file.name, file, {
         access: "public",
         handleUploadUrl: "/api/blog/upload",
+        onUploadProgress: ({ percentage }) => setUploadProgress(percentage),
       });
       setFormData((prev) => ({ ...prev, featured_image_url: blob.url }));
     } catch (error) {
       console.error("Upload error:", error);
       alert(error instanceof Error ? error.message : "Failed to upload image");
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -210,13 +217,33 @@ export default function StoryForm({
           type="file"
           accept="image/*"
           onChange={handleImageUpload}
+          disabled={isUploading}
           className="block w-full text-sm text-gray-900
             file:mr-4 file:py-2 file:px-4
             file:rounded-full file:border-0
             file:text-sm file:font-semibold
             file:bg-emerald-50 file:text-emerald-700
-            hover:file:bg-emerald-100"
+            hover:file:bg-emerald-100
+            disabled:opacity-50 disabled:cursor-not-allowed"
         />
+        {isUploading && (
+          <div className="mt-3">
+            <div className="flex items-center justify-between text-sm text-emerald-700 mb-1">
+              <span>Uploading image…</span>
+              <span>{uploadProgress}%</span>
+            </div>
+            <div className="h-2 w-full max-w-md rounded-full bg-emerald-100 overflow-hidden">
+              <div
+                className="h-full bg-emerald-600 transition-all"
+                style={{ width: `${uploadProgress}%` }}
+              />
+            </div>
+            <p className="mt-1 text-xs text-gray-500">
+              Large photos can take a moment — please wait until this finishes
+              before saving.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Content editor */}
@@ -326,19 +353,29 @@ export default function StoryForm({
         <button
           type="button"
           onClick={(e) => handleSubmit(e, false)}
-          disabled={isSubmitting || !formData.title || !formData.slug}
+          disabled={
+            isSubmitting || isUploading || !formData.title || !formData.slug
+          }
           className="px-6 py-3 border-2 border-emerald-600 text-emerald-600 rounded-lg font-medium hover:bg-emerald-50 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? "Saving..." : "Save Draft"}
+          {isUploading
+            ? "Uploading…"
+            : isSubmitting
+            ? "Saving..."
+            : "Save Draft"}
         </button>
 
         <button
           type="button"
           onClick={(e) => handleSubmit(e, true)}
-          disabled={isSubmitting || !formData.title || !formData.slug}
+          disabled={
+            isSubmitting || isUploading || !formData.title || !formData.slug
+          }
           className="px-6 py-3 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting
+          {isUploading
+            ? "Uploading…"
+            : isSubmitting
             ? "Publishing..."
             : isEdit && initialData?.published
             ? "Update"
