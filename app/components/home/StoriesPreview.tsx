@@ -12,7 +12,7 @@ export default function StoriesPreview() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch("/api/stories?limit=3", { cache: "no-store" });
+        const res = await fetch("/api/stories?limit=4", { cache: "no-store" });
         if (!res.ok) return;
         const data = (await res.json()) as { stories?: StoryListItem[] };
         setStories(data.stories || []);
@@ -48,7 +48,7 @@ export default function StoriesPreview() {
             Stories coming soon — check back shortly.
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
             {stories.map((story) => (
               <StoryCard key={story.id} story={story} />
             ))}
