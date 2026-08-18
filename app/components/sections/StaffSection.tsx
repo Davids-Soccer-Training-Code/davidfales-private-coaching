@@ -55,7 +55,7 @@ function CoachPhoto({
       <img
         src={member.photo_url}
         alt={`Coach ${member.name}`}
-        className={`${className} object-cover`}
+        className={`${className} object-cover object-top`}
       />
     );
   }
@@ -103,7 +103,7 @@ export default async function StaffSection() {
               <CoachPhoto
                 member={member}
                 color={AVATAR_COLORS[index % AVATAR_COLORS.length]}
-                className="w-full h-56"
+                className="w-full aspect-square"
               />
               <div className="p-6 flex flex-col grow">
                 <h3 className="text-2xl font-bold text-gray-900">
