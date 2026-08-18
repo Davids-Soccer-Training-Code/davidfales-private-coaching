@@ -6,7 +6,7 @@ type Review = {
   name: string;
   initial: string;
   color: string;
-  text: string;
+  text?: string;
 };
 
 const REVIEWS: Review[] = [
@@ -38,7 +38,23 @@ const REVIEWS: Review[] = [
     name: "Chadwick Tialino",
     initial: "C",
     color: "bg-indigo-600",
-    text: "Highly recommend Coach David — a fantastic experience for our family.",
+  },
+  {
+    name: "Aaron Campuzano",
+    initial: "A",
+    color: "bg-sky-600",
+  },
+  {
+    name: "Ellis Miles",
+    initial: "E",
+    color: "bg-teal-600",
+    text: "My son and daughter have both taken big steps forward with David's training. Their confidence is stronger, their communication is clearer, and their first touch has noticeably improved. The progress shows every session.",
+  },
+  {
+    name: "Okey Ikedilo",
+    initial: "O",
+    color: "bg-violet-600",
+    text: "Excellent training! My son is improving rapidly with this 1-on-1 coaching. They really focus on his weak areas and turn them into strengths. Coach David and Coach Simpson did an awesome job. Highly recommended!",
   },
 ];
 
@@ -121,9 +137,15 @@ export default function ReviewsCarousel() {
                       />
                     </svg>
                   </div>
-                  <p className="text-gray-700 text-lg leading-relaxed">
-                    "{review.text}"
-                  </p>
+                  {review.text ? (
+                    <p className="text-gray-700 text-lg leading-relaxed">
+                      "{review.text}"
+                    </p>
+                  ) : (
+                    <p className="text-gray-500 text-lg leading-relaxed italic">
+                      Rated 5 stars on Google.
+                    </p>
+                  )}
                 </div>
               </div>
             ))}

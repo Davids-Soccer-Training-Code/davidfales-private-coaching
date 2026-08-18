@@ -146,7 +146,7 @@ const MesaGilbertLandingPage = () => {
       "@type": "AggregateRating",
       ratingValue: "5.0",
       bestRating: "5",
-      ratingCount: "1",
+      ratingCount: "8",
     },
     sameAs: ["https://app.davidssoccertraining.com/book"],
   };
