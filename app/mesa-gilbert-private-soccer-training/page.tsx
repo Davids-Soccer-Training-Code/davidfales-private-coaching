@@ -23,35 +23,35 @@ const mesaTemplate =
 const mesaFaqItems = [
   {
     q: "Where exactly do sessions happen in Mesa and Gilbert?",
-    a: "We meet at quality public parks like Freestone Park, Discovery Park, Hetchler Park (Gilbert Soccer Complex), Red Mountain Park, and other Mesa/Gilbert locations. I’ll confirm the exact spot when we schedule based on what’s most convenient for you.",
+    a: "We meet at quality public parks like Gilbert Regional Park, Freestone Park, Hetchler Park (Gilbert Soccer Complex), Red Mountain Park, and other Mesa/Gilbert locations. We’ll confirm the exact spot when we schedule based on what’s most convenient for you.",
   },
   {
     q: "What age is this for?",
-    a: "Ages 8–16. Beginner to club level. Most of my players are in Mesa and Gilbert club soccer programs or looking to join one.",
+    a: "Ages 8–16. Beginner to club level. Most of our players are in Mesa and Gilbert club soccer programs or looking to join one.",
   },
   {
     q: "Do you work with players from specific Gilbert/Mesa soccer clubs?",
-    a: "Yes! I work with players from various East Valley clubs including Gilbert Youth Soccer Association (GYSA), Mesa United, and others. Training complements what they’re learning at club practice.",
+    a: "Yes! We work with players from various East Valley clubs including Gilbert Youth Soccer Association (GYSA), Mesa United, and others. Training complements what they’re learning at club practice.",
   },
   {
     q: "What should my player bring?",
     a: "Ball, water, cleats, shin guards. Parks have shade but bring sunscreen for Arizona weather.",
   },
   {
-    q: "Do you do small groups with my player’s teammates?",
-    a: "Absolutely! Small groups (2-7 players) are great for teammates who want to train together. Just text me to coordinate.",
+    q: "Do you do mini groups with my player’s teammates?",
+    a: "Absolutely! Mini groups (2-6 players max) are great for teammates who want to train together, and they run $30-$50 per session instead of $60-$80. Just text me to coordinate.",
   },
   {
     q: "How do I know which park we’ll use?",
-    a: "When you text me your location in Mesa or Gilbert, I’ll suggest 2-3 nearby parks and you can pick what works best for your schedule.",
+    a: "When you text us your location in Mesa or Gilbert, we’ll suggest 2-3 nearby parks and you can pick what works best for your schedule.",
   },
   {
     q: "What if weather is bad?",
-    a: "Arizona weather is usually great, but if it’s raining or too hot (110+), we’ll reschedule. I’ll text you in advance.",
+    a: "Arizona weather is usually great, but if it’s raining or too hot (110+), we’ll reschedule. We’ll text you in advance.",
   },
   {
     q: "How fast will we see improvement?",
-    a: "Most players improve fastest with consistency. I’ll give a simple plan after the first session.",
+    a: "Most players improve fastest with consistency. We’ll give a simple plan after the first session.",
   },
 ];
 
@@ -69,7 +69,7 @@ const MesaGilbertLandingPage = () => {
     telephone: "+17206122979",
     email: "davidfalesct@gmail.com",
     description:
-      "Private soccer training for youth players ages 8-16 in Mesa and Gilbert, Arizona. 1-on-1 and small group sessions with progress tracking.",
+      "Private soccer training for youth players ages 8-16 in Mesa and Gilbert, Arizona. 1-on-1 and mini group sessions with progress tracking.",
     priceRange: "$60-$100",
     areaServed: [
       {
@@ -114,7 +114,7 @@ const MesaGilbertLandingPage = () => {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "2-Player Small Group Training",
+            name: "2-Player Mini Group Training",
             description: "Soccer training for 2 players",
           },
           price: "80",
@@ -124,7 +124,7 @@ const MesaGilbertLandingPage = () => {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "3-Player Small Group Training",
+            name: "3-Player Mini Group Training",
             description: "Soccer training for 3 players",
           },
           price: "90",
@@ -134,10 +134,10 @@ const MesaGilbertLandingPage = () => {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Small Group Training",
-            description: "Soccer training for 2-7 players",
+            name: "Mini Group Training",
+            description: "Soccer training for 2-6 players, priced per player",
           },
-          price: "70",
+          price: "30",
           priceCurrency: "USD",
         },
       ],
@@ -220,14 +220,14 @@ const MesaGilbertLandingPage = () => {
         eyebrow="Serving Mesa & Gilbert"
         titleLead="Private Soccer Training in "
         titleHighlight="Mesa and Gilbert, Arizona"
-        subtitle="1-on-1 and small group sessions for ages 8–16 at convenient East Valley parks. Clear goals, real improvement, and a coach parents can trust."
+        subtitle="1-on-1 and mini group sessions for ages 8–16 at convenient East Valley parks. Clear goals, real improvement, and a coach parents can trust."
         bullets={[
           "Customized sessions based on your player’s needs",
           "Progress tracking with simple skill benchmarks",
           "Flexible scheduling by text at Mesa/Gilbert parks",
         ]}
         template={mesaTemplate}
-        note="Text me and we’ll confirm time & location at your preferred Mesa or Gilbert park."
+        note="Text us and we’ll confirm time & location at your preferred Mesa or Gilbert park."
         titleAs="h1"
       />
 
@@ -259,14 +259,14 @@ const MesaGilbertLandingPage = () => {
         steps={[
           {
             step: "Step 1",
-            title: "Text me your player’s age + main goal",
+            title: "Text us your player’s age + main goal",
             desc: "We’ll pick one priority (confidence on the ball, passing, finishing, etc.).",
             icon: "💬",
           },
           {
             step: "Step 2",
             title: "We pick a park in Mesa or Gilbert that works for you",
-            desc: "Popular options: Freestone Park, Hetchler Park, Discovery Park, Red Mountain Park, or your favorite local field.",
+            desc: "Popular options: Gilbert Regional Park, Freestone Park, Hetchler Park, Red Mountain Park, or your favorite local field.",
             icon: "📍",
           },
           {
@@ -330,17 +330,17 @@ const MesaGilbertLandingPage = () => {
                 </ul>
               </div>
 
-              {/* Discovery Park */}
+              {/* Gilbert Regional Park */}
               <div className="bg-white p-6 rounded-2xl shadow-lg border-2 border-emerald-100">
                 <div className="text-4xl mb-3">🌳</div>
                 <h4 className="text-xl font-bold text-gray-900 mb-2">
-                  Discovery Park
+                  Gilbert Regional Park
                 </h4>
                 <p className="text-gray-600 text-sm mb-3">
-                  Modern district park in the Santan Village area
+                  Our main home base — large regional park in south Gilbert
                 </p>
                 <p className="text-gray-500 text-xs">
-                  📍 2214 E. Pecos Rd, Gilbert
+                  📍 3005 E Queen Creek Rd, Gilbert
                 </p>
                 <ul className="mt-3 space-y-1 text-sm text-gray-700">
                   <li className="flex items-start">
@@ -494,7 +494,7 @@ const MesaGilbertLandingPage = () => {
               href={smsHref}
               className="inline-flex items-center justify-center bg-emerald-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-emerald-700 transition-colors shadow-lg"
             >
-              Text me your location
+              Text us your location
             </a>
           </div>
         </div>
@@ -505,8 +505,8 @@ const MesaGilbertLandingPage = () => {
       <TestingSection />
 
       <AboutSection
-        title="Meet Your Mesa & Gilbert Soccer Coach"
-        bio="I'm a dedicated soccer coach with a passion for helping young players reach their full potential. What sets my coaching apart is a clear plan + measurable benchmarks, paired with supportive coaching that builds confidence and consistency. I'm proud to serve Mesa and Gilbert families."
+        title="Meet Your Mesa & Gilbert Soccer Coaches"
+        bio="We're a team of coaches with a passion for helping young players reach their full potential. What sets our coaching apart is a clear plan + measurable benchmarks, paired with supportive coaching that builds confidence and consistency. We're proud to serve Mesa and Gilbert families."
       />
 
       <CredentialsSection />

@@ -25,14 +25,14 @@ export default function Hero({
   eyebrow = "Private soccer training (Gilbert & Mesa)",
   titleLead = "Private Soccer Training in ",
   titleHighlight = "Gilbert and Mesa",
-  subtitle = "1-on-1 and small group sessions for ages 8–16. Clear goals, real improvement, and a coach parents can trust.",
+  subtitle = "1-on-1 and mini group sessions for ages 8–16. Clear goals, real improvement, and a coach parents can trust.",
   bullets = [
     "Customized sessions based on your player’s needs",
     "Progress tracking with simple skill benchmarks",
     "Flexible scheduling by text",
   ],
   template = defaultTextTemplate,
-  note = "Text me and we’ll confirm time & location and get started.",
+  note = "Text us and we’ll confirm time & location and get started.",
   titleAs = "h2",
   showFeaturedPhotos = true,
 }: HeroProps) {

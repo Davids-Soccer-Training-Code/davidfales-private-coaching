@@ -54,14 +54,14 @@ function formatSpotsRemaining(spots: number) {
   return `${spots} ${spots === 1 ? "spot" : "spots"} remaining`;
 }
 
-export default function GroupSessionsPreview() {
+export default function MiniGroupsPreview() {
   const [sessions, setSessions] = useState<GroupSessionPreview[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const load = async () => {
       try {
-        const response = await fetch("/api/group-sessions?limit=4", {
+        const response = await fetch("/api/mini-groups?limit=4", {
           method: "GET",
           cache: "no-store",
         });
@@ -75,7 +75,7 @@ export default function GroupSessionsPreview() {
         };
         setSessions(payload.sessions || []);
       } catch (error) {
-        console.error("Failed to load group session preview", error);
+        console.error("Failed to load mini group preview", error);
       } finally {
         setLoading(false);
       }
@@ -88,9 +88,9 @@ export default function GroupSessionsPreview() {
     <section className="py-20 px-6 bg-linear-to-b from-emerald-50 to-white">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-12">
-          <p className="text-emerald-700 font-semibold mb-3">New: Group Sessions</p>
+          <p className="text-emerald-700 font-semibold mb-3">2-6 players, never more</p>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-             Upcoming Group Sessions
+             Upcoming Mini Groups
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Click any session to view details, enter player info, and sign up.
@@ -101,14 +101,14 @@ export default function GroupSessionsPreview() {
           <div className="text-center py-10 text-gray-600">Loading sessions...</div>
         ) : sessions.length === 0 ? (
           <div className="text-center py-10 text-gray-600">
-            No upcoming group sessions posted yet.
+            No upcoming mini groups posted yet.
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
             {sessions.map((session) => (
               <Link
                 key={session.id}
-                href={`/group-sessions/${session.id}`}
+                href={`/mini-groups/${session.id}`}
                 className="bg-white rounded-2xl border-2 border-emerald-100 shadow-sm hover:shadow-lg transition-shadow overflow-hidden"
               >
                 {session.image_url ? (
@@ -154,10 +154,10 @@ export default function GroupSessionsPreview() {
 
         <div className="text-center">
           <Link
-            href="/group-sessions"
+            href="/mini-groups"
             className="inline-flex items-center justify-center bg-emerald-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-emerald-700 transition-colors shadow-lg"
           >
-            View More Group Sessions
+            View All Mini Groups
           </Link>
         </div>
       </div>

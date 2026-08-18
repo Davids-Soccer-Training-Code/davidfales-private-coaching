@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Coach David | David's Soccer Training (Gilbert & Mesa)",
+  title: "Meet the Staff | David's Soccer Training (Gilbert & Mesa)",
   description:
-    "Meet Coach David — coaching philosophy, USSF & Coerver licenses, and experience developing youth soccer players ages 8–16 in Gilbert and Mesa.",
+    "Meet the coaches at David's Soccer Training — licenses, backgrounds, training areas across the East Valley, and a direct booking link for each coach.",
   alternates: {
     canonical: "/about",
   },

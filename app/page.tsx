@@ -21,7 +21,7 @@ const Home = () => {
     url: "https://www.davidssoccertraining.com",
     areaServed: ["Gilbert, AZ", "Mesa, AZ", "East Valley, AZ"],
     description:
-      "Private soccer training in Gilbert and Mesa for ages 8–16. 1-on-1 and small group sessions scheduled by text.",
+      "Private soccer training in Gilbert and Mesa for ages 8–16. 1-on-1 and mini group sessions scheduled by text.",
     telephone: "+17206122979",
   };
 

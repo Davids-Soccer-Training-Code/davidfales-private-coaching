@@ -31,8 +31,8 @@ const cards: LinkCard[] = [
   {
     href: "/about",
     icon: "🧑‍🏫",
-    title: "About Coach David",
-    desc: "Background, coaching philosophy, licenses & experience.",
+    title: "Meet the Staff",
+    desc: "Every coach's background, area, and a direct booking link.",
   },
   {
     href: "/stories",
@@ -41,10 +41,10 @@ const cards: LinkCard[] = [
     desc: "Real progress and wins from players who train with Coach David.",
   },
   {
-    href: "/group-sessions",
+    href: "/mini-groups",
     icon: "👥",
-    title: "Group Sessions",
-    desc: "Upcoming small-group sessions you can join.",
+    title: "Mini Groups",
+    desc: "Upcoming 2-6 player sessions you can join.",
   },
   {
     href: "/blog",

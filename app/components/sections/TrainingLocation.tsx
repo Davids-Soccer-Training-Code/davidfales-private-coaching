@@ -1,12 +1,51 @@
 import {
   TRAINING_LOCATION_NAME,
   TRAINING_LOCATION_CITY,
+  TRAINING_LOCATION_ADDRESS,
   TRAINING_LOCATION_FIELD,
   TRAINING_MAP_EMBED_URL,
   TRAINING_MAP_DIRECTIONS_URL,
 } from "@/app/lib/contact";
+import { getStaffForSite } from "@/app/lib/db/queries";
 
-export default function TrainingLocation() {
+// Where our other coaches train, so families outside Gilbert can see there is
+// someone near them. Cities come from crm_staff.booking_locations; a park name
+// only shows when that row actually has an address on it.
+const HOME_CITY = TRAINING_LOCATION_CITY.split(",")[0].trim();
+
+async function getOtherLocations() {
+  try {
+    const staff = await getStaffForSite();
+    const byCity = new Map<string, string[]>();
+
+    for (const member of staff) {
+      for (const location of member.booking_locations) {
+        const city = location.city?.trim();
+        if (!city || city === HOME_CITY) continue;
+
+        const parks = byCity.get(city) || [];
+        const address = location.address?.trim();
+        if (address && !address.includes(TRAINING_LOCATION_NAME)) {
+          const park = address.split(",")[0].trim();
+          if (park && park !== city && !parks.includes(park)) parks.push(park);
+        }
+        byCity.set(city, parks);
+      }
+    }
+
+    return Array.from(byCity.entries()).map(([city, parks]) => ({
+      city,
+      parks,
+    }));
+  } catch (error) {
+    console.error("Failed to load coach locations", error);
+    return [];
+  }
+}
+
+export default async function TrainingLocation() {
+  const otherLocations = await getOtherLocations();
+
   return (
     <section id="location" className="py-20 px-6 bg-white">
       <div className="container mx-auto max-w-6xl">
@@ -27,24 +66,32 @@ export default function TrainingLocation() {
               {TRAINING_LOCATION_NAME}
             </h3>
             <p className="text-emerald-700 font-semibold mb-5">
-              {TRAINING_LOCATION_CITY}
+              {TRAINING_LOCATION_ADDRESS}
             </p>
             <p className="text-gray-700 leading-relaxed text-lg mb-6">
-              All of my 1-on-1 training is held at {TRAINING_LOCATION_NAME} in{" "}
-              {TRAINING_LOCATION_CITY} — we train on{" "}
-              <span className="font-semibold text-gray-900">
-                {TRAINING_LOCATION_FIELD}
-              </span>
+              Our Gilbert sessions are held at {TRAINING_LOCATION_NAME} in{" "}
+              {TRAINING_LOCATION_CITY}
+              {TRAINING_LOCATION_FIELD ? (
+                <>
+                  {" "}
+                  — we train on{" "}
+                  <span className="font-semibold text-gray-900">
+                    {TRAINING_LOCATION_FIELD}
+                  </span>
+                </>
+              ) : null}
               . Same place every time, so it&apos;s easy to plan around.
             </p>
 
             <div className="space-y-3 mb-8">
-              <div className="flex items-center text-gray-700">
-                <span className="text-2xl mr-3 text-emerald-600">🥅</span>
-                <span className="text-lg">
-                  Meet on {TRAINING_LOCATION_FIELD}
-                </span>
-              </div>
+              {TRAINING_LOCATION_FIELD ? (
+                <div className="flex items-center text-gray-700">
+                  <span className="text-2xl mr-3 text-emerald-600">🥅</span>
+                  <span className="text-lg">
+                    Meet on {TRAINING_LOCATION_FIELD}
+                  </span>
+                </div>
+              ) : null}
               <div className="flex items-center text-gray-700">
                 <span className="text-2xl mr-3 text-emerald-600">⏱️</span>
                 <span className="text-lg">Each session is one hour long</span>
@@ -78,6 +125,33 @@ export default function TrainingLocation() {
             />
           </div>
         </div>
+
+        {otherLocations.length > 0 ? (
+          <div className="mt-10 bg-gray-50 border border-gray-200 rounded-2xl p-6 md:p-8">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">
+              We also coach elsewhere in the East Valley
+            </h3>
+            <p className="text-gray-600 mb-5">
+              Our other coaches run sessions closer to home. Text us your area
+              and we&apos;ll match you with the coach nearest you.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {otherLocations.map((location) => (
+                <div
+                  key={location.city}
+                  className="bg-white border border-gray-200 rounded-xl px-4 py-3"
+                >
+                  <p className="font-semibold text-gray-900">{location.city}</p>
+                  {location.parks.length > 0 ? (
+                    <p className="text-sm text-gray-600">
+                      {location.parks.join(" · ")}
+                    </p>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </div>
     </section>
   );

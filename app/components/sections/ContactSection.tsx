@@ -22,7 +22,7 @@ type ContactSectionProps = {
 };
 
 export default function ContactSection({
-  title = "Text me to get started",
+  title = "Text us to get started",
   subtitle = "Fastest is text or WhatsApp. If you prefer, fill this quick form.",
   defaultArea = "",
   source,
@@ -162,7 +162,7 @@ export default function ContactSection({
                 <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 text-gray-800">
                   <p className="font-semibold mb-1">Thanks — message sent.</p>
                   <p className="text-gray-700">
-                    I’ll reply as soon as I can to confirm a time and location.
+                    We’ll reply as soon as we can to confirm a time and location.
                   </p>
                 </div>
               ) : formStatus === "error" ? (
@@ -171,7 +171,7 @@ export default function ContactSection({
                     Something went wrong sending your message.
                   </p>
                   <p className="text-gray-700">
-                    Please try again, or just text me directly.
+                    Please try again, or just text us directly.
                   </p>
                 </div>
               ) : null}
@@ -413,7 +413,7 @@ export default function ContactSection({
             </div>
           </div>
           <p className="text-sm text-gray-500 mt-6">
-            I usually reply within 24 hours. If I’m coaching, I’ll respond later
+            We usually reply within 24 hours. If we’re coaching, we’ll respond later
             that day.
           </p>
         </div>

@@ -8,6 +8,7 @@ import {
 import { Photo, PhotoListItem } from "@/app/types/gallery";
 import { GroupSessionWithAvailability } from "@/app/types/groupSessions";
 import { Story, StoryListItem } from "@/app/types/story";
+import { StaffMember } from "@/app/types/staff";
 import crypto from "crypto";
 
 // ========== BLOG POSTS ==========
@@ -713,4 +714,26 @@ export async function checkStorySlugExists(
     excludeId ? [slug, excludeId] : [slug]
   );
   return result.rows.length > 0;
+}
+
+// ========== STAFF ==========
+
+export async function getStaffForSite(): Promise<StaffMember[]> {
+  const result = await pool.query(
+    `SELECT
+      id, name, slug, role, booking_role, player_ages, photo_url,
+      COALESCE(is_owner, false) AS is_owner,
+      COALESCE(booking_bio, description) AS bio,
+      COALESCE(booking_locations, '[]'::jsonb) AS booking_locations
+     FROM crm_staff
+     WHERE slug IS NOT NULL
+     ORDER BY name ASC`
+  );
+
+  return result.rows.map((row) => ({
+    ...row,
+    booking_locations: Array.isArray(row.booking_locations)
+      ? row.booking_locations
+      : [],
+  }));
 }

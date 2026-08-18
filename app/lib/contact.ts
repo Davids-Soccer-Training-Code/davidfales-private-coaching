@@ -7,11 +7,15 @@ export const COACH_EMAIL = "davidfalesct@gmail.com";
 
 export const BOOKING_URL = "https://app.davidssoccertraining.com/book";
 
-// All training is held at one location.
-export const TRAINING_LOCATION_NAME = "Discovery District Park";
+// Coach David's home base. Other coaches train out of their own parks --
+// those come from crm_staff.booking_locations.
+export const TRAINING_LOCATION_NAME = "Gilbert Regional Park";
 export const TRAINING_LOCATION_CITY = "Gilbert, AZ";
-export const TRAINING_LOCATION_FIELD = "Field 5 (sometimes Field 4)";
-const TRAINING_LOCATION_QUERY = "Discovery District Park, Gilbert, AZ";
+export const TRAINING_LOCATION_ADDRESS = "3005 E Queen Creek Rd, Gilbert, AZ 85298";
+// Set this once the regular field is confirmed at the new park; empty hides the
+// field-specific copy rather than promising a field we may not be on.
+export const TRAINING_LOCATION_FIELD = "";
+const TRAINING_LOCATION_QUERY = "Gilbert Regional Park, Gilbert, AZ";
 export const TRAINING_MAP_EMBED_URL = `https://www.google.com/maps?q=${encodeURIComponent(
   TRAINING_LOCATION_QUERY
 )}&output=embed`;

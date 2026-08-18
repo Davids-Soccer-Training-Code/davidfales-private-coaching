@@ -29,9 +29,11 @@ export default function CredentialsSection() {
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Licenses & Experience
+            Coach David&apos;s Licenses &amp; Experience
           </h2>
-          <p className="text-xl text-gray-600">Proven expertise you can trust</p>
+          <p className="text-xl text-gray-600">
+            Every coach on the team carries their own licenses and certifications
+          </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-12">

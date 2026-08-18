@@ -100,15 +100,16 @@ export default function PricingSection({
             </div>
           </div>
 
-          {/* 4-Week or Session-to-Session */}
+          {/* Week-to-Week */}
           <div className="bg-white p-8 rounded-2xl shadow-lg border-2 border-gray-200">
             <div className="text-center">
               <div className="text-5xl mb-3">📅</div>
               <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                4-Week Package or Week-to-Week
+                Week-to-Week
               </h3>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Flexible option to try training or work around busy schedules.
+                No package at all. Book week by week around a busy schedule, or
+                try training before committing.
               </p>
               <div className="bg-gray-50 rounded-xl p-4 mb-6">
                 <p className="text-xl font-bold text-gray-900 mb-1">
@@ -121,8 +122,8 @@ export default function PricingSection({
               <ul className="space-y-3 text-left">
                 {[
                   "Test out training first",
-                  "Schedule week by week",
-                  "No long-term commitment",
+                  "Book one week at a time",
+                  "No package, no commitment",
                 ].map((item) => (
                   <li key={item} className="flex items-start">
                     <span className="text-emerald-600 mr-2 text-xl">✓</span>
@@ -164,20 +165,18 @@ export default function PricingSection({
             <div className="bg-white p-6 rounded-xl shadow-md border border-emerald-100">
               <div className="flex items-center mb-4">
                 <div className="text-4xl mr-3">👥</div>
-                <h4 className="text-xl font-bold text-gray-900">
-                  Small Group Sessions
-                </h4>
+                <h4 className="text-xl font-bold text-gray-900">Mini Groups</h4>
               </div>
               <p className="text-gray-700 mb-4 leading-relaxed">
-                2-7 players. Great for teammates or friends. Game-like pressure
-                with focused coaching.
+                2-6 players, never more. The same coaching quality as a private
+                session, plus the pressure of real opponents.
               </p>
               <div className="bg-emerald-50 rounded-lg p-4">
                 <p className="text-gray-900 font-semibold">
-                  Sessions range from $50-$70 based on package and group size
+                  Sessions range from $30-$50 per player
                 </p>
                 <p className="text-gray-600 text-sm mt-2">
-                  Cost split among families
+                  Cost of the coach is split among families
                 </p>
               </div>
             </div>
@@ -288,7 +287,7 @@ export default function PricingSection({
             </div>
             <div className="space-y-3">
               {[
-                "One-on-one or small groups",
+                "One-on-one or mini groups",
                 "Schedule via text, call, or WhatsApp",
               ].map((item) => (
                 <div key={item} className="flex items-center text-gray-700">

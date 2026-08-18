@@ -9,21 +9,21 @@ type FaqSectionProps = {
 const defaultItems: FaqItem[] = [
   {
     q: "Where do sessions happen?",
-    a: "We meet at well-known public parks in Gilbert/Mesa. I’ll confirm the exact park when we schedule.",
+    a: "We meet at well-known public parks in Gilbert/Mesa. We’ll confirm the exact park when we schedule.",
   },
   { q: "What age is this for?", a: "Ages 8–16. Beginner to club level." },
   {
     q: "What should my player bring?",
     a: "Ball, water, cleats, shin guards.",
   },
-  { q: "Do you do small groups?", a: "Yes — text me for options." },
+  { q: "Do you do mini groups?", a: "Yes — 2-6 players max. Text us for options." },
   {
     q: "What if we need to reschedule?",
-    a: "Just text me as early as possible and we’ll find a new time.",
+    a: "Just text us as early as possible and we’ll find a new time.",
   },
   {
     q: "How fast will we see improvement?",
-    a: "Most players improve fastest with consistency. I’ll give a simple plan after the first session.",
+    a: "Most players improve fastest with consistency. We’ll give a simple plan after the first session.",
   },
 ];
 

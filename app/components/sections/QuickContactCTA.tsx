@@ -16,7 +16,7 @@ type QuickContactCTAProps = {
 };
 
 export default function QuickContactCTA({
-  title = "Text me to get started",
+  title = "Text us to get started",
   subtitle = "Fastest is text or WhatsApp — copy the message below and send it. Prefer a form or a quick intro call? Head to the contact page.",
   template = defaultTextTemplate,
 }: QuickContactCTAProps) {

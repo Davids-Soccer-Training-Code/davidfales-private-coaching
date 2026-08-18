@@ -14,7 +14,7 @@ type HowItWorksProps = {
 const defaultSteps: Step[] = [
   {
     step: "Step 1",
-    title: "Text me your player’s age + main goal",
+    title: "Text us your player’s age + main goal",
     desc: "We’ll pick one priority (confidence on the ball, passing, finishing, etc.).",
     icon: "💬",
   },

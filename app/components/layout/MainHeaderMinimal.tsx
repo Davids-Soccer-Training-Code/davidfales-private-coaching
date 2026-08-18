@@ -48,10 +48,10 @@ export default function MainHeaderMinimal() {
                 Home
               </a>
               <a
-                href="/group-sessions"
+                href="/mini-groups"
                 className="hover:text-emerald-200 transition-colors duration-200 font-medium text-sm"
               >
-                Group Sessions
+                Mini Groups
               </a>
               <a
                 href="/blog"
@@ -160,11 +160,11 @@ export default function MainHeaderMinimal() {
                 Home
               </a>
               <a
-                href="/group-sessions"
+                href="/mini-groups"
                 className="hover:text-emerald-200 transition-colors duration-200 font-medium text-base py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Group Sessions
+                Mini Groups
               </a>
               <a
                 href="/blog"

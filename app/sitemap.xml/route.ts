@@ -73,7 +73,7 @@ export async function GET() {
       priority: 0.9,
     },
     {
-      loc: `${SITE_URL}/group-sessions`,
+      loc: `${SITE_URL}/mini-groups`,
       lastmod: today,
       changefreq: "weekly",
       priority: 0.9,
@@ -106,7 +106,7 @@ export async function GET() {
     })),
     // Add all upcoming group session detail pages
     ...groupSessions.map((session) => ({
-      loc: `${SITE_URL}/group-sessions/${session.id}`,
+      loc: `${SITE_URL}/mini-groups/${session.id}`,
       lastmod: toIsoDate(new Date(session.updated_at)),
       changefreq: "weekly" as ChangeFreq,
       priority: 0.8,

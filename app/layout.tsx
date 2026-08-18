@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: "%s | David’s Soccer Training",
   },
   description:
-    "Private soccer training in Gilbert and Mesa for ages 8–16. 1-on-1 and small group sessions with clear goals, progress tracking, and flexible scheduling by text.",
+    "Private soccer training in Gilbert and Mesa for ages 8–16. 1-on-1 and mini group sessions (2-6 players) with clear goals, progress tracking, and flexible scheduling by text.",
   alternates: {
     canonical: "/",
   },
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     url: "/",
     title: "David’s Soccer Training",
     description:
-      "Private soccer training in Gilbert and Mesa for ages 8–16. 1-on-1 and small group sessions. Schedule by text.",
+      "Private soccer training in Gilbert and Mesa for ages 8–16. 1-on-1 and mini group sessions. Schedule by text.",
     siteName: "David’s Soccer Training",
     images: [
       {
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "David’s Soccer Training",
     description:
-      "Private soccer training in Gilbert and Mesa for ages 8–16. 1-on-1 and small group sessions. Schedule by text.",
+      "Private soccer training in Gilbert and Mesa for ages 8–16. 1-on-1 and mini group sessions. Schedule by text.",
     images: ["/icon.png"],
   },
   robots: {

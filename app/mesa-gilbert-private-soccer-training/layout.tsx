@@ -2,9 +2,9 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title:
-    "Private Soccer Training Mesa Gilbert AZ | Ages 8-16 | 1-on-1 & Small Group",
+    "Private Soccer Training Mesa Gilbert AZ | Ages 8-16 | 1-on-1 & Mini Groups",
   description:
-    "Private soccer training in Mesa and Gilbert, AZ. Expert 1-on-1 and small group coaching for ages 8-16 at local parks. Flexible scheduling, measurable progress. Text to start.",
+    "Private soccer training in Mesa and Gilbert, AZ. Expert 1-on-1 and mini group coaching for ages 8-16 at local parks. Flexible scheduling, measurable progress. Text to start.",
   alternates: {
     canonical: "/mesa-gilbert-private-soccer-training",
   },
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     url: "/mesa-gilbert-private-soccer-training",
     title: "Private Soccer Training in Mesa & Gilbert, Arizona",
     description:
-      "Expert private soccer coaching for youth players (ages 8-16) in Mesa and Gilbert. 1-on-1 and small group sessions at local East Valley parks.",
+      "Expert private soccer coaching for youth players (ages 8-16) in Mesa and Gilbert. 1-on-1 and mini group sessions at local East Valley parks.",
     siteName: "David's Soccer Training",
     images: [
       {
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Private Soccer Training Mesa Gilbert AZ | Youth Soccer Coach",
     description:
-      "1-on-1 and small group soccer training for ages 8-16 in Mesa and Gilbert, AZ. Flexible scheduling at local parks.",
+      "1-on-1 and mini group soccer training for ages 8-16 in Mesa and Gilbert, AZ. Flexible scheduling at local parks.",
     images: ["/icon.png"],
   },
   robots: {

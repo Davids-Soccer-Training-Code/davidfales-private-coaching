@@ -15,12 +15,12 @@ const programLinks: NavItem[] = [
   { href: "/training", label: "Training & Approach" },
   { href: "/testing", label: "Testing & Dashboard" },
   { href: "/pricing", label: "Pricing & Packages" },
-  { href: "/group-sessions", label: "Group Sessions" },
+  { href: "/mini-groups", label: "Mini Groups" },
 ];
 
 const exploreLinks: NavItem[] = [
   { href: "/stories", label: "Player Stories" },
-  { href: "/about", label: "About Coach David" },
+  { href: "/about", label: "Meet the Staff" },
   { href: "/blog", label: "Blog" },
   { href: "/gallery", label: "Gallery" },
   { href: PLAYER_DASHBOARD_URL, label: "Player Dashboard", external: true },
