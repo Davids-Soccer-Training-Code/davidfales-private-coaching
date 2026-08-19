@@ -3,6 +3,7 @@ import { PLAYER_DASHBOARD_URL } from "@/app/lib/contact";
 
 const footerLinks = [
   { href: "/training", label: "Training" },
+  { href: "/the-extra-hour", label: "The Extra Hour" },
   { href: "/testing", label: "Testing" },
   { href: "/pricing", label: "Pricing" },
   { href: "/mini-groups", label: "Mini Groups" },

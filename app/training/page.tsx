@@ -5,6 +5,7 @@ import WhatWeWorkOn from "@/app/components/sections/WhatWeWorkOn";
 import TrainingProcess from "@/app/components/sections/TrainingProcess";
 import TrainingLocation from "@/app/components/sections/TrainingLocation";
 import QuickContactCTA from "@/app/components/sections/QuickContactCTA";
+import ExtraHourCallout from "@/app/components/extra-hour/ExtraHourCallout";
 
 export default function TrainingPage() {
   return (
@@ -12,6 +13,7 @@ export default function TrainingPage() {
       <MainHeader />
       <WhatWeWorkOn />
       <TrainingProcess />
+      <ExtraHourCallout variant="training" />
       <TrainingLocation />
       <QuickContactCTA />
       <StickyContactBar />

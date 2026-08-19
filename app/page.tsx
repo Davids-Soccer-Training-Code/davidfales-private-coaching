@@ -11,6 +11,7 @@ import ReviewsCarousel from "@/app/components/home/ReviewsCarousel";
 import OutboundLinks from "@/app/components/home/OutboundLinks";
 import StoriesPreview from "@/app/components/home/StoriesPreview";
 import BlogPreview from "@/app/components/home/BlogPreview";
+import ExtraHourPreview from "@/app/components/home/ExtraHourPreview";
 
 const Home = () => {
   // Basic LocalBusiness Schema for homepage
@@ -56,6 +57,9 @@ const Home = () => {
       </section>
 
       <HowItWorks />
+
+      {/* What makes us different */}
+      <ExtraHourPreview />
 
       {/* Short "what we work on" teaser → full detail on /training */}
       <WhatWeWorkOn ctaHref="/training" ctaLabel="See how training works" />

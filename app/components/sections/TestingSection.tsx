@@ -1,88 +1,147 @@
-import { PLAYER_DASHBOARD_URL } from "@/app/lib/contact";
+import Link from "next/link";
 
-const tests = [
+type Test = {
+  icon: string;
+  title: string;
+  measures: string;
+  records: string[];
+  format: string;
+};
+
+const tests: Test[] = [
   {
-    icon: "⚽",
-    title: "Power Shot Test",
-    description:
-      "Measure your shooting power and accuracy with both feet to identify strengths and areas for improvement.",
-    features: [
-      "Distance measurement",
-      "Both foot testing",
-      "Power & accuracy tracking",
+    icon: "🔵",
+    title: "Juggling",
+    measures:
+      "Touch quality, rhythm, and how comfortable a player is on the ball with either foot.",
+    records: [
+      "Best juggles, any surface and feet only",
+      "Body-part challenge",
+      "Speed touches in 3 minutes",
+      "14-in-14 reps and the weak-foot ladder",
     ],
-  },
-  {
-    icon: "🎯",
-    title: "Distance Serve",
-    description:
-      "Test your long-range passing ability and technique to evaluate ball control and distribution skills.",
-    features: [
-      "Long-range accuracy",
-      "Technical form analysis",
-      "Distance benchmarking",
-    ],
-  },
-  {
-    icon: "🚪",
-    title: "Passing Gates",
-    description:
-      "Navigate precision passing through multiple gates to assess your passing accuracy and decision-making.",
-    features: [
-      "Precision testing",
-      "Speed & accuracy combo",
-      "Game-situation simulation",
-    ],
+    format:
+      "Count challenges get 4 attempts and the best one counts. Timed challenges get a 10-minute window, and the highest clean attempt counts.",
   },
   {
     icon: "🔄",
-    title: "Figure 8 Dribbling",
-    description:
-      "Test your close control and dribbling ability through figure 8 patterns to measure ball mastery.",
-    features: [
-      "Ball control assessment",
-      "Agility & coordination",
-      "Speed with control",
+    title: "Dribbling",
+    measures:
+      "Close control, turning, and how much speed a player keeps with the ball at their feet.",
+    records: [
+      "Figure-8 loops",
+      "Cross-dribble loops",
+      "Obstacle shuttle score",
     ],
+    format:
+      "Every set is one minute, run separately on the strong foot, the weak foot, and both. The obstacle course runs a cone weave, pole cross, skill-move gates, hurdles, and a minefield out to a turn cone and back — with deductions for touching equipment or using the wrong foot.",
+  },
+  {
+    icon: "🎯",
+    title: "Passing",
+    measures:
+      "Accuracy, weight of pass, and whether a player can repeat it under a clock.",
+    records: [
+      "Gate passes",
+      "Passes into a colour mini-goal",
+      "Read-the-colour passes",
+      "Passes through a 2-yard gate",
+    ],
+    format:
+      "One minute per foot. The harder versions add a decision before the pass, so it is never just technique in isolation.",
+  },
+  {
+    icon: "💥",
+    title: "Power",
+    measures: "Shot speed — the actual number, on both feet.",
+    records: ["4 strong-foot attempts", "4 weak-foot attempts"],
+    format:
+      "The best attempt on each foot counts, and both feet have to clear the standard. A big strong foot does not cover for a weak one.",
+  },
+  {
+    icon: "📏",
+    title: "Distance",
+    measures: "How far a player can strike a ball cleanly through the air.",
+    records: ["4 strong-foot attempts", "4 weak-foot attempts"],
+    format:
+      "The ball has to be struck in the air and is measured where it first lands, inside a 9-yard alley. Balls that finish outside the alley take a deduction, so distance never comes at the cost of accuracy.",
+  },
+  {
+    icon: "✨",
+    title: "Skill Moves",
+    measures:
+      "How many moves a player owns, how many they can chain, and whether they can produce them on demand.",
+    records: [
+      "Different moves executed",
+      "Combos executed",
+      "Live application percentage",
+      "The specific move names",
+    ],
+    format:
+      "Live application means the coach calls a move or a combo and the player performs it on command — which is the difference between knowing a move and having one.",
+  },
+  {
+    icon: "⚽",
+    title: "Shooting Accuracy",
+    measures: "Whether a player can actually hit the corners on purpose.",
+    records: [
+      "Bottom corners from inside the box",
+      "Bottom corners from the top of the 18",
+      "All four corners",
+      "The same tests off a moving ball",
+    ],
+    format:
+      "Ball counts are fixed per drill so the score always means the same thing. Distance goes up, the ball starts moving, and the target shrinks to all four corners as the levels climb.",
+  },
+  {
+    icon: "🪄",
+    title: "First Touch",
+    measures:
+      "Receiving and killing the ball into a small box, from the ground and out of the air.",
+    records: [
+      "Ground into a 5x5 box — distance reached",
+      "Ground into a 3x3 box, one touch",
+      "Aerial into a 3x3 box",
+      "Aerial into a 3x3 box, one touch",
+    ],
+    format:
+      "It runs as a ladder: start at 5 yards, move a yard farther after a clean rep and a yard closer after a miss, for 5 minutes. We record how far they got.",
   },
 ];
 
-const dashboardFeatures = [
+const athleticTests = [
   {
-    title: "Player info",
-    desc: "Basic details so training stays personalized (age, notes, and what we’re focusing on).",
+    icon: "⚡",
+    title: "5-10-5 Agility",
+    desc: "Change of direction and body control over a short shuttle.",
   },
   {
-    title: "Tests & results",
-    desc: "Skill tests like shooting, passing, and dribbling — with history so we can track improvement.",
-  },
-  {
-    title: "Goals",
-    desc: "Clear targets and next steps (what to work on between sessions).",
+    icon: "🦵",
+    title: "Single Leg Hop",
+    desc: "Balance, stability, and single-leg power — often where a weak side shows up first.",
   },
 ];
 
-const dashboardCards = [
+const cycle = [
   {
-    title: "Tests & Results",
-    subtitle: "Scores + history so progress is measurable",
-    imgSrc: "/dashboard-tests-results.png",
-    imgAlt: "Player Dashboard - Tests and Results screen",
-    aspectClass: "aspect-[4/5]",
+    step: "1",
+    title: "Baseline",
+    desc: "The full test battery at the start, so we know exactly where we are beginning.",
   },
   {
-    title: "Goals",
-    subtitle: "Targets + what to work on next",
-    imgSrc: "/dashboard-goals.png",
-    imgAlt: "Player Dashboard - Goals screen",
-    aspectClass: "aspect-[4/5]",
+    step: "2",
+    title: "Training focus",
+    desc: "The numbers point at a weak spot, and that becomes what we actually train.",
   },
   {
-    title: "Player Info",
-    subtitle: "Profile + notes we use to personalize training",
-    imgSrc: "/dashboard-player-info.png",
-    imgAlt: "Player Dashboard - Player Info screen",
-    aspectClass: "aspect-video",
+    step: "3",
+    title: "Retest",
+    desc: "Same tests, same setup, every 6th session. The comparison is honest because nothing changed but the player.",
+  },
+  {
+    step: "4",
+    title: "Next step",
+    desc: "The new numbers decide the next focus. Then it starts again.",
   },
 ];
 
@@ -93,136 +152,162 @@ export default function TestingSection() {
       className="py-20 px-6 bg-linear-to-b from-emerald-50 to-emerald-100"
     >
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-16">
+        <div className="text-center mb-6">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            More Than Just Coaching
+            Testing &amp; Data
           </h2>
-          <p className="text-xl text-gray-600">
-            Data-driven skill assessments to track your progress, identify areas
-            for improvement, and celebrate your achievements.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            We do not guess. Every player is tested at the start and again every
+            6th session — run the same way every time, so the numbers are
+            actually comparable.
           </p>
           <p className="text-base text-gray-600 mt-3 max-w-3xl mx-auto">
-            Testing is simple and optional. It helps us measure progress — not
-            overcomplicate training.
+            Results feed the player’s stats, their level in each individual
+            test, and their overall rank. That is how we find the gap worth
+            training next instead of guessing at it.
+          </p>
+          <p className="mt-5">
+            <Link
+              href="/the-extra-hour"
+              className="inline-flex items-center gap-2 text-emerald-700 font-bold hover:text-emerald-800 transition-colors"
+            >
+              See how testing fits into The Extra Hour, our full development
+              system
+              <span aria-hidden="true">→</span>
+            </Link>
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {tests.map((test, index) => (
-            <div
-              key={index}
-              className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-emerald-200"
-            >
-              <div className="flex items-start mb-4">
-                <div className="text-5xl mr-4">{test.icon}</div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                    {test.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed">
-                    {test.description}
-                  </p>
-                </div>
-              </div>
-              <ul className="space-y-2">
-                {test.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center text-gray-700">
-                    <span className="text-emerald-600 mr-2 text-xl">✓</span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+        {/* The eight tests */}
+        <div className="mt-14">
+          <div className="text-center mb-10">
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-900">
+              The eight tests
+            </h3>
+            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+              Every one of these has a fixed standard at each level, and a
+              player has to pass all eight to rank up.
+            </p>
+          </div>
 
-        {/* Additional Tests Note */}
-        <div className="mt-12 text-center">
-          <div className="bg-linear-to-r from-emerald-50 to-white p-8 rounded-2xl shadow-md border border-emerald-200 max-w-3xl mx-auto">
-            <p className="text-gray-700 text-lg mb-2">
-              <span className="font-bold text-emerald-600">
-                Additional tests available
-              </span>{" "}
-              based on your specific goals and skill level
-            </p>
-            <p className="text-gray-600">
-              Custom assessments can be designed to target any aspect of your
-              game
-            </p>
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+            {tests.map((test) => (
+              <div
+                key={test.title}
+                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-emerald-200 flex flex-col"
+              >
+                <div className="flex items-start mb-4">
+                  <div className="text-5xl mr-4 shrink-0">{test.icon}</div>
+                  <div>
+                    <h4 className="text-2xl font-bold text-gray-900 mb-2">
+                      {test.title}
+                    </h4>
+                    <p className="text-gray-600 leading-relaxed">
+                      {test.measures}
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-xs font-bold uppercase tracking-wide text-emerald-700 mb-2">
+                  What the coach records
+                </p>
+                <ul className="space-y-1.5 pb-2">
+                  {test.records.map((record) => (
+                    <li key={record} className="flex items-start text-gray-700">
+                      <span className="text-emerald-600 mr-2 leading-6">✓</span>
+                      <span>{record}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <p className="mt-auto pt-4 text-sm text-gray-600 leading-relaxed border-t border-emerald-100">
+                  {test.format}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Player Dashboard */}
+        {/* Athletic benchmarks */}
+        <div className="mt-12 bg-white rounded-3xl shadow-md border border-emerald-200 p-8 md:p-10">
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900">
+            Athletic benchmarks, when they are useful
+          </h3>
+          <p className="mt-3 text-gray-600 max-w-3xl">
+            Alongside the eight, we can run athletic tests for players whose
+            limit is physical rather than technical.
+          </p>
+
+          <div className="mt-6 grid sm:grid-cols-2 gap-5">
+            {athleticTests.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-emerald-100 bg-emerald-50/60 p-6"
+              >
+                <div className="text-3xl mb-2">{item.icon}</div>
+                <p className="font-bold text-gray-900">{item.title}</p>
+                <p className="mt-1.5 text-gray-600 text-sm">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-6 text-gray-700">
+            <span className="font-bold text-emerald-700">
+              Custom tests are available too
+            </span>{" "}
+            — if a player has a specific goal or a specific problem, we can build
+            an assessment around it.
+          </p>
+        </div>
+
+        {/* How the cycle works */}
         <div className="mt-14">
-          <div className="bg-white rounded-3xl shadow-xl border-2 border-emerald-200 p-8 md:p-10">
-            <div className="grid lg:grid-cols-2 gap-10 items-start">
-              <div>
-                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  Player Dashboard
-                </h3>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  The Player Dashboard is where we keep everything organized so
-                  progress is clear — not guesswork. It helps players stay
-                  motivated and helps parents actually see improvement over time.
-                </p>
+          <div className="text-center mb-8">
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-900">
+              How the testing cycle works
+            </h3>
+            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+              Testing is not the training. It is the thing that tells us what
+              the training should be.
+            </p>
+          </div>
 
-                <div className="mt-6 space-y-3">
-                  {dashboardFeatures.map((item) => (
-                    <div key={item.title} className="flex items-start gap-3">
-                      <span className="text-emerald-600 text-xl leading-none mt-0.5">
-                        ✓
-                      </span>
-                      <div>
-                        <p className="font-bold text-gray-900">{item.title}</p>
-                        <p className="text-gray-700">{item.desc}</p>
-                      </div>
-                    </div>
-                  ))}
+          <div className="grid md:grid-cols-4 gap-5">
+            {cycle.map((item, index) => (
+              <div key={item.step} className="relative">
+                <div className="h-full bg-white rounded-2xl border-2 border-emerald-200 shadow-md p-6">
+                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-emerald-600 text-white font-bold">
+                    {item.step}
+                  </span>
+                  <p className="mt-3 text-xl font-bold text-gray-900">
+                    {item.title}
+                  </p>
+                  <p className="mt-2 text-gray-600 leading-relaxed text-sm">
+                    {item.desc}
+                  </p>
                 </div>
-
-                <div className="mt-7">
-                  <a
-                    href={PLAYER_DASHBOARD_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center justify-center bg-emerald-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-emerald-700 transition-colors shadow-lg"
+                {index < cycle.length - 1 && (
+                  <span
+                    aria-hidden="true"
+                    className="hidden md:block absolute top-1/2 -right-3.5 -translate-y-1/2 text-emerald-400 text-2xl font-bold"
                   >
-                    Open Player Dashboard
-                  </a>
-                </div>
+                    →
+                  </span>
+                )}
               </div>
+            ))}
+          </div>
 
-              <div className="grid sm:grid-cols-2 gap-6">
-                {dashboardCards.map((card, idx) => (
-                  <div
-                    key={card.title}
-                    className={`bg-white rounded-2xl shadow-md border border-emerald-100 overflow-hidden ${
-                      idx === 2 ? "sm:col-span-2" : ""
-                    }`}
-                  >
-                    <div className="p-4 border-b border-emerald-100">
-                      <p className="font-bold text-gray-900">{card.title}</p>
-                      <p className="text-gray-600 text-sm mt-1">
-                        {card.subtitle}
-                      </p>
-                    </div>
-
-                    <div className="p-4">
-                      <div
-                        className={`${card.aspectClass} rounded-xl bg-linear-to-br from-gray-50 to-gray-100 border border-gray-200 overflow-hidden`}
-                      >
-                        <img
-                          src={card.imgSrc}
-                          alt={card.imgAlt}
-                          className="w-full h-full object-contain"
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="mt-8 rounded-2xl bg-white border border-emerald-200 shadow-sm p-6 md:p-8">
+            <p className="font-bold text-gray-900 text-lg">
+              Lighter checks in between
+            </p>
+            <p className="mt-2 text-gray-700 leading-relaxed">
+              Juggling and skill moves are quick enough to fit into a warmup, so
+              we practice them often and officially record them every couple of
+              weeks. The bigger benchmark tests stay at the checkpoints — that
+              is what keeps them meaningful.
+            </p>
           </div>
         </div>
       </div>

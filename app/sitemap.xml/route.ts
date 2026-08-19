@@ -67,6 +67,12 @@ export async function GET() {
       priority: 1.0,
     },
     {
+      loc: `${SITE_URL}/the-extra-hour`,
+      lastmod: today,
+      changefreq: "monthly",
+      priority: 0.9,
+    },
+    {
       loc: `${SITE_URL}/mesa-gilbert-private-soccer-training`,
       lastmod: today,
       changefreq: "weekly",

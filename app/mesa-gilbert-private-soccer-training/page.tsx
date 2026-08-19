@@ -7,6 +7,7 @@ import WhoThisIsFor from "@/app/components/sections/WhoThisIsFor";
 import HowItWorks from "@/app/components/sections/HowItWorks";
 import WhatWeWorkOn from "@/app/components/sections/WhatWeWorkOn";
 import TestingSection from "@/app/components/sections/TestingSection";
+import PlayerDashboardSection from "@/app/components/sections/PlayerDashboardSection";
 import AboutSection from "@/app/components/sections/AboutSection";
 import CredentialsSection from "@/app/components/sections/CredentialsSection";
 import GettingStarted from "@/app/components/sections/GettingStarted";
@@ -503,6 +504,7 @@ const MesaGilbertLandingPage = () => {
       <WhatWeWorkOn title="What We Work On: Core Soccer Skills for Mesa & Gilbert Players" />
 
       <TestingSection />
+      <PlayerDashboardSection />
 
       <AboutSection
         title="Meet Your Mesa & Gilbert Soccer Coaches"

@@ -14,6 +14,7 @@ type NavItem = { href: string; label: string; external?: boolean };
 const programLinks: NavItem[] = [
   { href: "/training", label: "Training & Approach" },
   { href: "/testing", label: "Testing & Dashboard" },
+  { href: "/the-extra-hour", label: "The Extra Hour" },
   { href: "/pricing", label: "Pricing & Packages" },
   { href: "/mini-groups", label: "Mini Groups" },
 ];
