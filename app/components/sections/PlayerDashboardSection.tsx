@@ -55,7 +55,7 @@ const screens: Screen[] = [
   {
     title: "What to work on before next session",
     subtitle: "Goals",
-    body: "Each period goal comes with the actual steps to do it, assigned to days. Players tick them off as they go, and both the current goal and every past one stay on the record.",
+    body: "A period goal can be broken into the actual steps to do it, each assigned to a day. Players tick them off as they go, and both the current goal and every past one stay on the record.",
     bullets: [
       "One clear focus at a time, with a start and end date",
       "Specific steps, assigned to specific days",
