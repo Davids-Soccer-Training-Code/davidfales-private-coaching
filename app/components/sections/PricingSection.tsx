@@ -173,10 +173,10 @@ export default function PricingSection({
               </p>
               <div className="bg-emerald-50 rounded-lg p-4">
                 <p className="text-gray-900 font-semibold">
-                  Sessions range from $30-$50 per player
+                  $40 per player, per session
                 </p>
                 <p className="text-gray-600 text-sm mt-2">
-                  Cost of the coach is split among families
+                  Fridays 6-7pm, Sundays 5-6pm and 6-7pm at Gilbert Regional Park
                 </p>
               </div>
             </div>

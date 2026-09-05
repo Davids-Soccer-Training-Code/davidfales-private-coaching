@@ -1,7 +1,6 @@
 import {
   getPublishedPosts,
   getPublishedPhotos,
-  getUpcomingGroupSessions,
 } from "@/app/lib/db/queries";
 
 type ChangeFreq =
@@ -57,7 +56,6 @@ export async function GET() {
   // Get all published blog posts and photos
   const posts = await getPublishedPosts(1000, 0);
   const photos = await getPublishedPhotos(1000, 0);
-  const groupSessions = await getUpcomingGroupSessions(1000);
 
   const urls: SitemapUrl[] = [
     {
@@ -110,13 +108,15 @@ export async function GET() {
       changefreq: "monthly" as ChangeFreq,
       priority: 0.6,
     })),
-    // Add all upcoming group session detail pages
-    ...groupSessions.map((session) => ({
-      loc: `${SITE_URL}/mini-groups/${session.id}`,
-      lastmod: toIsoDate(new Date(session.updated_at)),
-      changefreq: "weekly" as ChangeFreq,
-      priority: 0.8,
-    })),
+    // ARCHIVED alongside the mini group listings: /mini-groups/:id now 301s to
+    // the booking app and nothing links to it, so those URLs no longer belong
+    // in the sitemap.
+    // ...groupSessions.map((session) => ({
+    //   loc: `${SITE_URL}/mini-groups/${session.id}`,
+    //   lastmod: toIsoDate(new Date(session.updated_at)),
+    //   changefreq: "weekly" as ChangeFreq,
+    //   priority: 0.8,
+    // })),
   ];
 
   const xml = buildXml(urls);

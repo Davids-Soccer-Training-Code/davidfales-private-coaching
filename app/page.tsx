@@ -12,6 +12,7 @@ import OutboundLinks from "@/app/components/home/OutboundLinks";
 import StoriesPreview from "@/app/components/home/StoriesPreview";
 import BlogPreview from "@/app/components/home/BlogPreview";
 import ExtraHourPreview from "@/app/components/home/ExtraHourPreview";
+import MiniGroupsBanner from "@/app/components/home/MiniGroupsBanner";
 
 const Home = () => {
   // Basic LocalBusiness Schema for homepage
@@ -38,6 +39,8 @@ const Home = () => {
       />
 
       <MainHeader />
+
+      <MiniGroupsBanner />
 
       <Hero />
 

@@ -1,10 +1,13 @@
-import Link from "next/link";
 import MainHeader from "@/app/components/layout/MainHeader";
 import MainFooter from "@/app/components/layout/MainFooter";
-import { getUpcomingGroupSessions } from "@/app/lib/db/queries";
-
-export const dynamic = "force-dynamic";
-const GROUP_TIME_ZONE = "America/Phoenix";
+import MiniGroupInterestForm from "@/app/components/mini-groups/MiniGroupInterestForm";
+import {
+  MINI_GROUP_ADDRESS,
+  MINI_GROUP_LOCATION,
+  MINI_GROUP_MAP_URL,
+  MINI_GROUP_PRICE,
+  MINI_GROUP_SLOTS,
+} from "@/app/lib/miniGroups";
 
 const comparisonRows = [
   {
@@ -28,7 +31,7 @@ const comparisonRows = [
   {
     label: "Cost per session",
     private: "$60-$80",
-    group: "$30-$50",
+    group: `$${MINI_GROUP_PRICE} flat`,
     team: "Included in club fees",
   },
   {
@@ -66,56 +69,63 @@ const whyMiniGroups = [
   },
 ];
 
-function formatSessionDate(input: string) {
-  return new Intl.DateTimeFormat("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    timeZone: GROUP_TIME_ZONE,
-  }).format(new Date(input));
-}
+/*
+ * ARCHIVED: per-session listings and online checkout.
+ *
+ * Mini groups used to be one-off sessions posted to the `group_sessions` table,
+ * each with its own price, image, and Stripe checkout on the booking app. The
+ * schedule is now three fixed weekly slots and placement is done by hand, so the
+ * page below renders `MINI_GROUP_SLOTS` instead. The data, the API routes under
+ * /api/group-sessions, and the /mini-groups/:id redirect in next.config.ts are
+ * all still in place - restore this block to bring the listings back.
+ *
+ * import Link from "next/link";
+ * import { getUpcomingGroupSessions } from "@/app/lib/db/queries";
+ *
+ * export const dynamic = "force-dynamic";
+ * const GROUP_TIME_ZONE = "America/Phoenix";
+ *
+ * function formatSessionDate(input: string) {
+ *   return new Intl.DateTimeFormat("en-US", {
+ *     weekday: "long", month: "long", day: "numeric", year: "numeric",
+ *     hour: "numeric", minute: "2-digit", timeZone: GROUP_TIME_ZONE,
+ *   }).format(new Date(input));
+ * }
+ *
+ * function addMinutes(input: string | Date, minutes: number) {
+ *   return new Date(new Date(input).getTime() + minutes * 60_000);
+ * }
+ *
+ * function formatSessionTimeRange(startInput: string, endInput: string | null) {
+ *   const start = new Date(startInput);
+ *   const end = endInput ? new Date(endInput) : addMinutes(start, 75);
+ *   const format = new Intl.DateTimeFormat("en-US", {
+ *     hour: "numeric", minute: "2-digit", timeZone: GROUP_TIME_ZONE,
+ *   });
+ *   return `${format.format(start)} - ${format.format(end)}`;
+ * }
+ *
+ * function formatPrice(input: number | null) {
+ *   if (!input || Number.isNaN(Number(input))) return "TBD";
+ *   return new Intl.NumberFormat("en-US", {
+ *     style: "currency", currency: "USD", maximumFractionDigits: 2,
+ *   }).format(Number(input));
+ * }
+ *
+ * function formatSpotsRemaining(spots: number) {
+ *   return `${spots} ${spots === 1 ? "spot" : "spots"} remaining`;
+ * }
+ *
+ * // Inside the component:
+ * const upcomingSessions = await getUpcomingGroupSessions(100);
+ *
+ * // And in place of the schedule section:
+ * <section id="upcoming" className="py-20 px-6 bg-linear-to-r from-emerald-600 to-emerald-700 text-white">
+ *   ...grid of session cards linking to /mini-groups/${session.id}...
+ * </section>
+ */
 
-function addMinutes(input: string | Date, minutes: number) {
-  return new Date(new Date(input).getTime() + minutes * 60_000);
-}
-
-function formatSessionTimeRange(startInput: string, endInput: string | null) {
-  const start = new Date(startInput);
-  const end = endInput ? new Date(endInput) : addMinutes(start, 75);
-  const format = new Intl.DateTimeFormat("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    timeZone: GROUP_TIME_ZONE,
-  });
-  return `${format.format(start)} - ${format.format(end)}`;
-}
-
-function formatPrice(input: number | null) {
-  if (!input || Number.isNaN(Number(input))) return "TBD";
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 2,
-  }).format(Number(input));
-}
-
-function formatSpotsRemaining(spots: number) {
-  return `${spots} ${spots === 1 ? "spot" : "spots"} remaining`;
-}
-
-function getWeekdayLabel(input: string) {
-  return new Intl.DateTimeFormat("en-US", {
-    weekday: "long",
-    timeZone: GROUP_TIME_ZONE,
-  }).format(new Date(input));
-}
-
-export default async function MiniGroupsPage() {
-  const upcomingSessions = await getUpcomingGroupSessions(100);
-
+export default function MiniGroupsPage() {
   return (
     <div className="min-h-screen bg-linear-to-b from-white to-emerald-50">
       <MainHeader />
@@ -128,7 +138,7 @@ export default async function MiniGroupsPage() {
         <div className="container relative mx-auto max-w-6xl min-h-[72vh] md:min-h-[78vh] flex items-center">
           <div className="w-full text-center">
             <p className="inline-flex items-center rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-sm font-semibold tracking-wide">
-              Mini Groups
+              {MINI_GROUP_LOCATION} &middot; ${MINI_GROUP_PRICE} per player
             </p>
 
             <h1 className="text-5xl md:text-7xl font-black tracking-tight mt-5 mb-5">
@@ -140,12 +150,24 @@ export default async function MiniGroupsPage() {
               player has someone to beat.
             </p>
 
+            <div className="mx-auto mt-8 grid max-w-3xl gap-3 sm:grid-cols-3">
+              {MINI_GROUP_SLOTS.map((slot) => (
+                <div
+                  key={slot.id}
+                  className="rounded-2xl border border-white/25 bg-white/10 px-4 py-3 backdrop-blur-sm"
+                >
+                  <p className="text-lg font-bold">{slot.day}</p>
+                  <p className="text-emerald-50">{slot.time}</p>
+                </div>
+              ))}
+            </div>
+
             <div className="flex flex-wrap items-center justify-center gap-3 mt-9">
               <a
-                href="#upcoming"
+                href="#signup"
                 className="inline-flex items-center justify-center bg-white text-emerald-800 px-6 py-3 rounded-full font-semibold hover:bg-emerald-50 transition-colors shadow-lg"
               >
-                Choose a Session
+                Save My Spot
               </a>
               <a
                 href="#why"
@@ -258,70 +280,57 @@ export default async function MiniGroupsPage() {
         </div>
       </section>
 
-      <section id="upcoming" className="py-20 px-6 bg-linear-to-r from-emerald-600 to-emerald-700 text-white">
-        <div className="container mx-auto max-w-6xl">
+      <section
+        id="signup"
+        className="py-20 px-6 bg-linear-to-r from-emerald-600 to-emerald-700 text-white"
+      >
+        <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-10">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Upcoming Mini Groups
+              The Schedule
             </h2>
-            <p className="text-xl text-emerald-100">
-              Every session below is capped at 6 players. Pick one and continue
-              to details, player info, and checkout.
+            <p className="text-xl text-emerald-100 max-w-2xl mx-auto">
+              Same park, same times, every week. ${MINI_GROUP_PRICE} per player
+              per session, capped at 6.
             </p>
           </div>
 
-          {upcomingSessions.length === 0 ? (
-            <div className="rounded-2xl border border-white/25 bg-white/10 p-6 text-center text-emerald-50">
-              No upcoming sessions are posted yet.
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {upcomingSessions.map((session) => (
-                <div
-                  key={session.id}
-                  className="rounded-2xl border border-white/25 bg-white/10 backdrop-blur-sm overflow-hidden"
-                >
-                  {session.image_url ? (
-                    <div className="aspect-video bg-emerald-900/40">
-                      <img
-                        src={session.image_url}
-                        alt={session.title}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                  ) : null}
+          <div className="grid sm:grid-cols-3 gap-4 mb-8">
+            {MINI_GROUP_SLOTS.map((slot) => (
+              <div
+                key={slot.id}
+                className="rounded-2xl border border-white/25 bg-white/10 backdrop-blur-sm p-6 text-center"
+              >
+                <p className="text-2xl font-bold">{slot.day}</p>
+                <p className="text-emerald-50 text-lg mt-1">{slot.time}</p>
+              </div>
+            ))}
+          </div>
 
-                  <div className="p-5">
-                    <h3 className="text-2xl font-bold mt-1 mb-2">{session.title}</h3>
-                    <p className="text-emerald-100 text-sm mb-1">
-                      {formatSessionDate(session.session_date)}
-                    </p>
-                    <p className="text-emerald-100 text-sm mb-4">
-                      Time:{" "}
-                      {formatSessionTimeRange(
-                        session.session_date,
-                        session.session_date_end
-                      )}
-                    </p>
+          <div className="mb-10 rounded-2xl border border-white/25 bg-white/10 backdrop-blur-sm p-6 text-center">
+            <p className="text-lg font-semibold">{MINI_GROUP_LOCATION}</p>
+            <p className="text-emerald-100">{MINI_GROUP_ADDRESS}</p>
+            <a
+              href={MINI_GROUP_MAP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-3 font-semibold underline underline-offset-4 hover:text-emerald-100"
+            >
+              Open in Maps
+            </a>
+          </div>
 
-                    <div className="space-y-2 text-sm text-emerald-50 mb-5">
-                      <p>Location: {session.location || "TBD"}</p>
-                      <p>Price: {formatPrice(session.price)}</p>
-                      <p>{formatSpotsRemaining(session.spots_left)}</p>
-                    </div>
+          <div className="text-center mb-8">
+            <h3 className="text-3xl md:text-4xl font-bold mb-3">
+              Tell us who is coming
+            </h3>
+            <p className="text-lg text-emerald-100 max-w-2xl mx-auto">
+              Four boxes and you&apos;re done. Coach David reads every one and
+              texts you back with the group that fits your player best.
+            </p>
+          </div>
 
-                    <Link
-                      href={`/mini-groups/${session.id}`}
-                      className="inline-flex items-center justify-center rounded-full bg-white text-emerald-800 px-5 py-2.5 font-semibold hover:bg-emerald-50 transition-colors"
-                    >
-                      View Details & Sign Up
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          <MiniGroupInterestForm />
         </div>
       </section>
 
@@ -329,9 +338,12 @@ export default async function MiniGroupsPage() {
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-linear-to-br from-emerald-50 to-white p-7 rounded-2xl border-2 border-emerald-100 shadow-sm">
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Questions</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                How placement works
+              </h3>
               <p className="text-gray-700 leading-relaxed mb-3">
-                Not sure which session fits best? Reach out and we&apos;ll help place your player.
+                You pick the times that work. We group players by age and level
+                so nobody is the odd one out, then text you the confirmed slot.
               </p>
               <p className="text-gray-700 leading-relaxed">
                 Placement is flexible for players near age and level boundaries.
@@ -343,16 +355,18 @@ export default async function MiniGroupsPage() {
               <div className="space-y-3 text-gray-700">
                 <p className="font-semibold">Text/Call: (720) 612-2979</p>
                 <p className="font-semibold">Email: davidfalesct@gmail.com</p>
-                <p>Questions about schedule, placement, or checkout are welcome.</p>
+                <p>Questions about schedule or placement are welcome.</p>
               </div>
             </div>
 
             <div className="bg-linear-to-br from-emerald-50 to-white p-7 rounded-2xl border-2 border-emerald-100 shadow-sm">
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Refund / Cancellation Policy</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                If you have to miss
+              </h3>
               <ul className="space-y-2 text-gray-700">
-                <li>Cancel 24+ hours before start: full credit or refund.</li>
-                <li>Cancel under 24 hours: no refund, one-time credit may be offered.</li>
-                <li>Coach/weather cancellation: full credit or refund.</li>
+                <li>Nothing is paid online, so nothing to refund.</li>
+                <li>Text as early as you can so the spot goes to someone else.</li>
+                <li>Coach or weather cancellation: we move you to another night.</li>
               </ul>
             </div>
           </div>

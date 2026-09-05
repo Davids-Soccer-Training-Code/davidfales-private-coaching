@@ -9,6 +9,7 @@ import { Photo, PhotoListItem } from "@/app/types/gallery";
 import { GroupSessionWithAvailability } from "@/app/types/groupSessions";
 import { Story, StoryListItem } from "@/app/types/story";
 import { StaffMember } from "@/app/types/staff";
+import { MiniGroupInterest } from "@/app/types/miniGroups";
 import crypto from "crypto";
 
 // ========== BLOG POSTS ==========
@@ -736,4 +737,41 @@ export async function getStaffForSite(): Promise<StaffMember[]> {
       ? row.booking_locations
       : [],
   }));
+}
+
+// ========== MINI GROUP INTEREST ==========
+
+export async function createMiniGroupInterest(input: {
+  parentName: string;
+  email: string;
+  phone: string;
+  playerName: string;
+  preferredTimes: string[];
+}): Promise<MiniGroupInterest> {
+  const result = await pool.query(
+    `INSERT INTO mini_group_interest
+      (parent_name, email, phone, player_name, preferred_times)
+     VALUES ($1, $2, $3, $4, $5::jsonb)
+     RETURNING *`,
+    [
+      input.parentName,
+      input.email,
+      input.phone,
+      input.playerName,
+      JSON.stringify(input.preferredTimes),
+    ]
+  );
+  return result.rows[0];
+}
+
+export async function getMiniGroupInterest(
+  limit = 200
+): Promise<MiniGroupInterest[]> {
+  const result = await pool.query(
+    `SELECT * FROM mini_group_interest
+     ORDER BY created_at DESC
+     LIMIT $1`,
+    [limit]
+  );
+  return result.rows;
 }
